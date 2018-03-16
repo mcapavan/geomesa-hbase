@@ -31,18 +31,17 @@ mvn --version
 ``` 
 
 
-```
+```bash
 git clone https://github.com/locationtech/geomesa.git
 cd geomesa
 # Build geomesa-hbase from source code
-mvn clean install -pl geomesa-hbase -am -DskipTests
+mvn clean install -pl geomesa-hbase/geomesa-hbase-dist -am
 cd /tmp/geomesa/geomesa-hbase/geomesa-hbase-dist/target
 cp geomesa-hbase_2.11-2.0.0-SNAPSHOT-bin.tar.gz ~/
 cd ~/
 tar -xvf geomesa-hbase_2.11-2.0.0-SNAPSHOT-bin.tar.gz
 cp -R geomesa-hbase_2.11-2.0.0-SNAPSHOT /opt
 ln -s /opt/geomesa-hbase_2.11-2.0.0-SNAPSHOT /opt/geomesa-hbase
-
 ```
 
 Configure the environment to use an HDP install
