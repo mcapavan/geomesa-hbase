@@ -140,3 +140,60 @@ export JAVA_TOOL_OPTIONS=-Dgeomesa.hbase.coprocessor.path=hdfs://pchalla0.field.
 https://dev.locationtech.org/mhonarc/lists/geomesa-users/msg02028.html
 
 https://viztales.wordpress.com/my-geomesa-experience/
+
+**Install GeoServer**
+
+```bash
+wget http://sourceforge.net/projects/geoserver/files/GeoServer/2.12.2/geoserver-2.12.2-bin.zip
+unzip geoserver-2.12.2-bin.zip
+mv geoserver-2.12.2 /usr/share
+cd /usr/share
+ln -s geoserver-2.12.2 geoserver
+echo "export GEOSERVER_HOME=/usr/share/geoserver" >> /etc/bashrc
+source /etc/bashrc
+# Check if GeoServer can be started successfully
+cd geoserver/bin
+sh startup.sh
+```
+open the GeoServer from post 8080/geoserver like below
+http://pchalla2.field.hortonworks.com:8080/geoserver
+
+**Installing GeoMesa HBase in GeoServer**
+
+The following JARs should be copied from the lib directory of your HBase or Hadoop installations into GeoServer’s WEB-INF/lib
+ 
+```bash
+cd /usr/share/geoserver/webapps/geoserver/WEB-INF/lib/
+cp /opt/geomesa-hbase/dist/gs-plugins/geomesa-hbase-gs-plugin_2.11-2.0.0-SNAPSHOT-install.tar.gz .
+tar -xvf geomesa-hbase-gs-plugin_2.11-2.0.0-SNAPSHOT-install.tar.gz
+rm -f geomesa-hbase-gs-plugin_2.11-2.0.0-SNAPSHOT-install.tar.gz
+cp /usr/hdp/2.6.4.0-91/hadoop//hadoop-annotations-2.7.3.2.6.4.0-91.jar .
+cp /usr/hdp/2.6.4.0-91/hadoop//hadoop-auth-2.7.3.2.6.4.0-91.jar .
+cp /usr/hdp/2.6.4.0-91/hadoop//hadoop-common-2.7.3.2.6.4.0-91.jar .
+cp /usr/hdp/2.6.4.0-91/hadoop/lib/protobuf-java-2.5.0.jar .
+cp /usr/hdp/2.6.4.0-91/hadoop/lib/commons-io-2.4.jar .
+cp /usr/hdp/2.6.4.0-91/hbase/lib/hbase-server-1.1.2.2.6.4.0-91.jar .
+cp /usr/hdp/2.6.4.0-91/hadoop/lib/zookeeper-3.4.6.2.6.4.0-91.jar .
+cp /usr/hdp/2.6.4.0-91/hadoop/lib/commons-configuration-1.6.jar .
+ln -s /usr/hdp/current/hbase-client/conf/hbase-site.xml ../classes/hbase-site.xml
+```
+
+Register the GeoMesa Store with GeoServer
+Log into GeoServer using your user and password credentials. Click “Stores” and “Add new Store”. Select the HBase (GeoMesa) vector data source, and fill in the required parameters.
+
+Basic store info:
+
+workspace this is dependent upon your GeoServer installation
+data source name pick a sensible name, such as geomesa_quick_start
+description this is strictly decorative; GeoMesa quick start
+Connection parameters:
+
+these are the same parameter values that you supplied on the command line when you ran the tutorial; they describe how to connect to the HBase instance where your data reside
+Click “Save”, and GeoServer will search your HBase table for any GeoMesa-managed feature types.
+
+refer http://www.geomesa.org/documentation/tutorials/geomesa-quickstart-hbase.html 
+
+ref:
+
+http://docs.geoserver.org/2.12.x/en/user/installation/linux.html
+https://github.com/geoserver/geoserver/tree/2.12.2
