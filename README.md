@@ -185,6 +185,8 @@ data source name pick a sensible name, such as geomesa_quick_start
 description this is strictly decorative; GeoMesa quick start
 Connection parameters:
 
+![Alt text](/images/nvds.png?raw=true "New Vector Data Source")
+
 these are the same parameter values that you supplied on the command line when you ran the tutorial; they describe how to connect to the HBase instance where your data reside
 Click “Save”, and GeoServer will search your HBase table for any GeoMesa-managed feature types.
 
@@ -198,6 +200,7 @@ You will be taken to the “Edit Layer” screen. You will need to enter values 
 Click on the “Save” button when you are done.
 
 **Take a Look**
+
 Click on the “Layer Preview” link in the left-hand gutter. If you don’t see the quick-start layer on the first page of results, enter the name of the layer you just created into the search box, and press <Enter>.
 
 Once you see your layer, click on the “OpenLayers” link, which will open a new tab. You should see a collection of red dots similar to the following image:
