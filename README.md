@@ -171,6 +171,8 @@ cp /usr/hdp/2.6.4.0-91/hadoop/lib/commons-configuration-1.6.jar .
 ln -s /usr/hdp/current/hbase-client/conf/hbase-site.xml ../classes/hbase-site.xml
 ```
 
+*Stop and Start the GeoServer to reflect the GeoMesa HBase plugin*
+
 Register the GeoMesa Store with GeoServer
 Log into GeoServer using your user and password credentials. The default administration credentials are: User name: admin; Password: geoserver 
 
@@ -185,6 +187,23 @@ Connection parameters:
 
 these are the same parameter values that you supplied on the command line when you ran the tutorial; they describe how to connect to the HBase instance where your data reside
 Click “Save”, and GeoServer will search your HBase table for any GeoMesa-managed feature types.
+
+
+**Publish the Layer**
+GeoServer should recognize the gdelt-quickstart feature type, and should present that as a layer that can be published. Click on the “Publish” link.
+
+You will be taken to the “Edit Layer” screen. You will need to enter values for the data bounding boxes. In this case, you can click on the link to compute these values from the data.
+*Bounding Boxes can be updated by clicking on "compute from data" or "compute from native bounds"*
+
+Click on the “Save” button when you are done.
+
+**Take a Look**
+Click on the “Layer Preview” link in the left-hand gutter. If you don’t see the quick-start layer on the first page of results, enter the name of the layer you just created into the search box, and press <Enter>.
+
+Once you see your layer, click on the “OpenLayers” link, which will open a new tab. You should see a collection of red dots similar to the following image:
+
+![alt text](https://github.com/mcapavan/geomesa-hbase/images/map.png)
+
 
 refer http://www.geomesa.org/documentation/tutorials/geomesa-quickstart-hbase.html 
 
