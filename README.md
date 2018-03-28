@@ -127,13 +127,6 @@ java -cp geomesa-tutorials-hbase/geomesa-tutorials-hbase-quickstart/target/geome
     
 ```
 
-**Register the Coprocessors**
-
-```text
-export JAVA_TOOL_OPTIONS=-Dgeomesa.hbase.coprocessor.path=hdfs://pchalla0.field.hortonworks.com:8020/apps/hbase/lib/geomesa-hbase-distributed-runtime_2.11-2.0.0-SNAPSHOT.jar
-```
-
-
 
 **Issues reference links:**
 
@@ -179,7 +172,9 @@ ln -s /usr/hdp/current/hbase-client/conf/hbase-site.xml ../classes/hbase-site.xm
 ```
 
 Register the GeoMesa Store with GeoServer
-Log into GeoServer using your user and password credentials. Click “Stores” and “Add new Store”. Select the HBase (GeoMesa) vector data source, and fill in the required parameters.
+Log into GeoServer using your user and password credentials. The default administration credentials are: User name: admin; Password: geoserver 
+
+Click “Stores” and “Add new Store”. Select the HBase (GeoMesa) vector data source, and fill in the required parameters.
 
 Basic store info:
 
