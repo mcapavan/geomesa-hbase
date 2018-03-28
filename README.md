@@ -202,7 +202,7 @@ Click on the “Layer Preview” link in the left-hand gutter. If you don’t se
 
 Once you see your layer, click on the “OpenLayers” link, which will open a new tab. You should see a collection of red dots similar to the following image:
 
-![alt text](https://github.com/mcapavan/geomesa-hbase/images/map.png)
+![alt text](https://github.com/mcapavan/geomesa-hbase/tree/master/images/map.png)
 
 
 refer http://www.geomesa.org/documentation/tutorials/geomesa-quickstart-hbase.html 

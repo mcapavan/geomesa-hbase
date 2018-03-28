@@ -18,8 +18,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="658">
-                <caret line="204" column="64" lean-forward="false" selection-start-line="204" selection-start-column="64" selection-end-line="204" selection-end-column="64" />
+              <first_editor relative-caret-position="601">
+                <caret line="204" column="72" lean-forward="false" selection-start-line="204" selection-start-column="12" selection-end-line="204" selection-end-column="72" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -28,6 +28,11 @@
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>https://github.com/mcapavan/geomesa-hbase/blob/master/images/map.png</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -277,8 +282,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="658">
-            <caret line="204" column="64" lean-forward="false" selection-start-line="204" selection-start-column="64" selection-end-line="204" selection-end-column="64" />
+          <first_editor relative-caret-position="601">
+            <caret line="204" column="72" lean-forward="false" selection-start-line="204" selection-start-column="12" selection-end-line="204" selection-end-column="72" />
             <folding />
           </first_editor>
           <second_editor />
