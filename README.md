@@ -3,6 +3,8 @@ Use GeoMesa-Hbase to ingest and query geospatial dataset
 
 Ref: http://www.geomesa.org/documentation/user/hbase/install.html
 
+#### Install and configure GeoMesa-HBase
+
 Download source code
 
 *Ensure git, mvn installed and JAVA_HOME is configured below commands can be used*
@@ -151,7 +153,7 @@ sh startup.sh
 open the GeoServer from post 8080/geoserver like below
 http://pchalla2.field.hortonworks.com:8080/geoserver
 
-**Installing GeoMesa HBase in GeoServer**
+####Installing GeoMesa HBase in GeoServer
 
 The following JARs should be copied from the lib directory of your HBase or Hadoop installations into GeoServer’s WEB-INF/lib
  
@@ -160,9 +162,9 @@ cd /usr/share/geoserver/webapps/geoserver/WEB-INF/lib/
 cp /opt/geomesa-hbase/dist/gs-plugins/geomesa-hbase-gs-plugin_2.11-2.0.0-SNAPSHOT-install.tar.gz .
 tar -xvf geomesa-hbase-gs-plugin_2.11-2.0.0-SNAPSHOT-install.tar.gz
 rm -f geomesa-hbase-gs-plugin_2.11-2.0.0-SNAPSHOT-install.tar.gz
-cp /usr/hdp/2.6.4.0-91/hadoop//hadoop-annotations-2.7.3.2.6.4.0-91.jar .
-cp /usr/hdp/2.6.4.0-91/hadoop//hadoop-auth-2.7.3.2.6.4.0-91.jar .
-cp /usr/hdp/2.6.4.0-91/hadoop//hadoop-common-2.7.3.2.6.4.0-91.jar .
+cp /usr/hdp/2.6.4.0-91/hadoop/hadoop-annotations-2.7.3.2.6.4.0-91.jar .
+cp /usr/hdp/2.6.4.0-91/hadoop/hadoop-auth-2.7.3.2.6.4.0-91.jar .
+cp /usr/hdp/2.6.4.0-91/hadoop/hadoop-common-2.7.3.2.6.4.0-91.jar .
 cp /usr/hdp/2.6.4.0-91/hadoop/lib/protobuf-java-2.5.0.jar .
 cp /usr/hdp/2.6.4.0-91/hadoop/lib/commons-io-2.4.jar .
 cp /usr/hdp/2.6.4.0-91/hbase/lib/hbase-server-1.1.2.2.6.4.0-91.jar .
@@ -214,3 +216,81 @@ ref:
 
 http://docs.geoserver.org/2.12.x/en/user/installation/linux.html
 https://github.com/geoserver/geoserver/tree/2.12.2
+
+
+####Ingest geospatial sample data by using Geomesa-Hbase
+
+Copy below sample ais data in *sample.csv*
+
+```text
+151001000015660,1001001,-1,55.476868,-25.874775,0.4,50,-999.9,511,2015-10-01 06:14:33,1
+151001000015661,1001001,-1,55.476868,-25.874775,0.4,50,-999.9,511,2015-10-01 06:14:34,1
+151002008706375,1001001,-1,55.82175,-26.442037,0.7,40,-999.9,511,2015-10-02 05:12:46,1
+151002008706376,1001001,-1,55.82175,-26.442037,0.7,40,-999.9,511,2015-10-02 05:12:47,1
+
+```
+
+Create GeoMesa SimpleFeatureType (sft) configuration file as below in *ais_data_conf.sft*
+
+```text
+geomesa.sfts.ais-lines = {
+    attributes = [
+        { name = "arkposid",    type = "Long",    index = true    }
+        { name = "mmsi",    type = "Integer",    index = false    }
+        { name = "navigationalstatus",    type = "Integer",    index = false    }
+        { name = "coords",    type = "Point",    index = true,    srid = 4326, default = true    }
+        { name = "sog",    type = "Double",    index = false    }
+        { name = "cog",    type = "Double",    index = false    }
+        { name = "rot",    type = "Double",    index = false    }
+        { name = "heading",    type = "Integer",    index = false    }
+        { name = "acquisitiontime",    type = "String",    index = false    }
+        { name = "iptype",    type = "Integer",    index = false    }
+    ]
+}
+```
+
+Create GeoMesa converter configuration file as below in *ais_data_feature_conf.convert*
+
+```text
+geomesa.converters.ais-lines = {
+    type = "delimited-text",
+    format = "CSV",
+    id-field = "toString($arkposid)",
+    fields = [
+        { name = "arkposid",    transform = "$1::long"    }
+        { name = "mmsi",    transform = "$2::int"    }
+        { name = "navigationalstatus",    transform = "$3::int"    }
+        { name = "lon",    transform = "$4::double"    }
+        { name = "lat",    transform = "$5::double"    }
+        { name = "coords",    transform = "point($lon, $lat)"    }
+        { name = "sog",    transform = "$6::double"    }
+        { name = "cog",    transform = "$7::double"    }
+    	{ name = "rot",    transform = "$8::double"    }
+        { name = "heading",    transform = "$9::int"    }
+    	{ name = "acquisitiontime",    transform = "toString($10)"    }
+    	{ name = "iptype",    transform = "$11::int"    }
+    ]
+}
+```
+
+Run the geomesa-hbase command to insert the CSV data into HBase 
+
+```bash
+geomesa-hbase ingest \
+-c ais \
+-s /tmp/ais_data_conf-2.sft \
+-C /tmp/ais_data_feature_conf-2.convert \
+/tmp/sample.csv
+```
+
+Should received successful message as below
+
+```text
+INFO  Creating schema 'ais-lines'
+INFO  Running ingestion in local mode
+INFO  Ingesting 1 file with 1 thread
+[============================================================] 100% complete 4 ingested 0 failed in 00:00:01
+INFO  Local ingestion complete in 00:00:01
+INFO  Ingested 4 features and failed to ingest 0 feature.
+```
+
