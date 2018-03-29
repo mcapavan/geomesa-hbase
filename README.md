@@ -8,7 +8,7 @@ Goal:
 
 Ref: http://www.geomesa.org/documentation/user/hbase/install.html
 
-### Install and configure GeoMesa-HBase
+## Install and configure GeoMesa-HBase
 
 Download source code
 
@@ -158,7 +158,7 @@ sh startup.sh
 open the GeoServer from post 8080/geoserver like below
 http://pchalla2.field.hortonworks.com:8080/geoserver
 
-### Installing GeoMesa HBase in GeoServer
+## Installing GeoMesa HBase in GeoServer
 
 The following JARs should be copied from the lib directory of your HBase or Hadoop installations into GeoServer’s WEB-INF/lib
  
@@ -223,7 +223,7 @@ http://docs.geoserver.org/2.12.x/en/user/installation/linux.html
 https://github.com/geoserver/geoserver/tree/2.12.2
 
 
-### Ingest geospatial sample data by using Geomesa-Hbase
+## Ingest geospatial sample data by using Geomesa-Hbase
 
 Copy below sample ais data in *sample.csv*
 
